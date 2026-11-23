@@ -1,0 +1,15 @@
+{
+  "name": "LMS People Excellence",
+  "short_name": "LMS",
+  "description": "SOP, pelatihan, dan sertifikat karyawan BOS, SIBIMA, dan BEJO.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F7F7F4",
+  "theme_color": "#0F2C6B",
+  "lang": "id",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
