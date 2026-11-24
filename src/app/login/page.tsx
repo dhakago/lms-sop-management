@@ -11,7 +11,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       <div className="blob" aria-hidden="true" style={{ right: -120, top: 160, width: 480, height: 480, background: 'var(--a)', filter: 'blur(100px)', opacity: 0.5 }} />
       <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexWrap: 'wrap', gap: 40, alignItems: 'center', maxWidth: 1040, width: '100%' }}>
         <div style={{ flex: '1 1 340px' }}>
-          <div style={{ fontFamily: 'var(--head)', fontWeight: 700, fontSize: 28, color: 'var(--p)' }}>PEOPLE</div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logos/people.png" alt="PEOPLE" width={240} height={53} style={{ display: 'block', width: 240, height: 'auto' }} />
           <h1 style={{ marginTop: 24, fontSize: 'clamp(32px, 6vw, 44px)', color: 'var(--p)' }}>Know the way, do it right.</h1>
           <p style={{ margin: '14px 0 0', fontSize: 17, lineHeight: 1.55, color: '#34403B', maxWidth: 460 }}>
             Pelajari cara kerja yang benar, kapan saja dan di mana saja.
