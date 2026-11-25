@@ -5,6 +5,7 @@ import { Crumbs } from '@/components/Crumbs';
 import { getCtx } from '@/lib/session';
 import { isSuper, MODULE_LABEL, type Module } from '@/lib/authz';
 import { createClient } from '@/lib/supabase/server';
+import { UserTabs } from '../tabs';
 import { THEMES, type HoldingId } from '@/lib/theme';
 
 export const metadata = { title: 'Akses admin' };
@@ -30,7 +31,8 @@ export default async function Akses({ searchParams }: { searchParams: Promise<{ 
   return (
     <Shell ctx={ctx} active="kelola">
       <Crumbs items={[{ label: 'Kelola', href: '/kelola' }, { label: 'Akses admin' }]} />
-      <h1 className="page-title">Akses admin</h1>
+      <h1 className="page-title">Manajemen pengguna</h1>
+      <UserTabs ctx={ctx} active="peran" />
 
       <section className="glass card">
         <h2 style={{ fontSize: 20, marginBottom: 10 }}>Beri akses ke orang lain</h2>

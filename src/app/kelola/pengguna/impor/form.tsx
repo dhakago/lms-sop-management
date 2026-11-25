@@ -79,7 +79,7 @@ export function ImportForm() {
         </button>
       </div>
 
-      <form onSubmit={previewAction} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <form method="post" onSubmit={previewAction} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <Notice error={prev.error} />
         <label className="field">
           <span>File CSV</span>
@@ -132,7 +132,7 @@ export function ImportForm() {
             </table>
           </div>
           {p.valid > 0 && (
-            <form onSubmit={commitAction}>
+            <form method="post" onSubmit={commitAction}>
               <input type="hidden" name="csv" value={csv} />
               <button className="btn" type="submit" disabled={committing} style={{ minHeight: 52 }}>
                 {committing ? 'Menyimpan...' : `Simpan ${p.valid} pengguna`}

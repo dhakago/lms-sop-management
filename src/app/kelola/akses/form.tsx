@@ -12,7 +12,7 @@ export function AccessForm({ id, holdings, modules, granted }: {
   const [s, action, pending] = useForm<AccessState>(saveAccess, {});
   const has = new Set(granted);
   return (
-    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form method="post" onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <input type="hidden" name="id" value={id} />
       <Notice error={s.error} ok={s.ok} />
       <div style={{ overflowX: 'auto' }}>

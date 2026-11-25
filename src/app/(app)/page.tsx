@@ -5,37 +5,60 @@ import { fmtDate, getMandatory } from '@/lib/sop';
 
 export const metadata = { title: 'Beranda' };
 
+// Beranda menampilkan SOP yang ditugaskan kepada pengguna. Tanpa penugasan, tidak ada yang muncul di sini,
+// tetapi SOP holding tetap bisa dibaca dari menu SOP.
 export default async function Beranda() {
   const ctx = await getCtx();
-  const mandatory = await getMandatory(ctx);
+  const assigned = await getMandatory(ctx);
   const first = ctx.profile.full_name.split(' ')[0];
-  const pending = mandatory.filter((m) => m.read < m.total);
+  const waiting = assigned.filter((m) => m.read < m.total);
+  const done = assigned.filter((m) => m.read >= m.total);
 
   return (
     <Shell ctx={ctx} active="beranda">
       <header>
         <h1 className="page-title">Halo, {first}</h1>
-        <p className="sub">{ctx.theme.name}. {pending.length > 0 ? `${pending.length} SOP wajib dibaca menunggu Anda.` : 'Tidak ada SOP wajib dibaca yang tertunda.'}</p>
+        <p className="sub">{ctx.theme.name}. {waiting.length > 0 ? `${waiting.length} SOP ditugaskan dan menunggu Anda.` : 'Tidak ada SOP yang menunggu Anda.'}</p>
       </header>
 
-      <section className="glass card" aria-labelledby="wajib">
-        <h2 id="wajib" style={{ fontSize: 20 }}>SOP wajib dibaca</h2>
-        {mandatory.length === 0 ? (
-          <p className="muted" style={{ marginTop: 10 }}>Belum ada SOP yang diwajibkan untuk Anda.</p>
+      <section aria-labelledby="menunggu" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="row" style={{ gap: 10 }}>
+          <h2 id="menunggu" style={{ fontSize: 20 }}>Menunggu Anda</h2>
+          {waiting.length > 0 && <span className="chip grey">{waiting.length}</span>}
+        </div>
+        {waiting.length === 0 ? (
+          <div className="glass card"><p className="muted">Belum ada SOP yang ditugaskan kepada Anda. Penugasan baru akan muncul di sini.</p></div>
         ) : (
-          <div className="list" style={{ marginTop: 6 }}>
-            {mandatory.map((m) => (
-              <Link key={m.playbookId} href={`/sop/p/${m.playbookId}`} className="list-row">
-                <span className="grow">
-                  <b>{m.playbook}</b>
-                  <span className="muted">{m.read} dari {m.total} card dibaca. Batas {fmtDate(m.dueOn)}</span>
-                </span>
-                {m.read >= m.total ? <span className="chip ok">Selesai</span> : m.late ? <span className="chip bad">Terlambat</span> : <span className="chip warn">Belum selesai</span>}
-              </Link>
-            ))}
-          </div>
+          waiting.map((m) => (
+            <div key={m.playbookId} className="glass card row between" style={{ padding: '14px 18px' }}>
+              <div>
+                <div className="muted" style={{ fontSize: 13 }}>Playbook</div>
+                <b style={{ fontSize: 17 }}>{m.playbook}</b>
+                <div className="muted" style={{ fontSize: 13 }}>
+                  Card {m.read} dari {m.total} dibaca. Batas {fmtDate(m.dueOn)} {m.late && <span className="chip bad" style={{ marginLeft: 6 }}>Terlambat</span>}
+                </div>
+              </div>
+              <Link className="btn sec" href={`/sop/p/${m.playbookId}`}>{m.read === 0 ? 'Mulai' : 'Lanjutkan'}</Link>
+            </div>
+          ))
         )}
       </section>
+
+      {done.length > 0 && (
+        <section aria-labelledby="selesai" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <h2 id="selesai" style={{ fontSize: 18 }}>Sudah selesai</h2>
+          <div className="glass card">
+            <div className="list">
+              {done.map((m) => (
+                <Link key={m.playbookId} href={`/sop/p/${m.playbookId}`} className="list-row">
+                  <span className="grow"><b>{m.playbook}</b><span className="muted">{m.total} card dibaca</span></span>
+                  <span className="chip ok">Selesai</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="grid">
         <Link href="/sop" className="glass card" style={{ textDecoration: 'none', color: 'inherit' }}>

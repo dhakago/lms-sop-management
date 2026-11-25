@@ -6,7 +6,7 @@ import { mutateUser, resetPassword, setActive, updateMembership, type ActionStat
 export function ResetPanel({ id }: { id: string }) {
   const [s, action, pending] = useForm<ActionState>(resetPassword, {});
   return (
-    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <form method="post" onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <input type="hidden" name="id" value={id} />
       <p className="muted" style={{ margin: 0 }}>Membuat kata sandi sementara baru. Yang bersangkutan wajib menggantinya saat masuk, dan kunci akibat salah ketik dibuka.</p>
       <Notice error={s.error} ok={s.password ? undefined : s.ok} />
@@ -21,7 +21,7 @@ export function ResetPanel({ id }: { id: string }) {
 export function ActivePanel({ id, active, self }: { id: string; active: boolean; self: boolean }) {
   const [s, action, pending] = useForm<ActionState>(setActive, {});
   return (
-    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <form method="post" onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <input type="hidden" name="id" value={id} />
       <input type="hidden" name="aktif" value={active ? '0' : '1'} />
       <p className="muted" style={{ margin: 0 }}>
@@ -41,7 +41,7 @@ export function EditPanel({ id, holding, holdingName, unit, jobTitle, managerNo 
 }) {
   const [s, action, pending] = useForm<ActionState>(updateMembership, {});
   return (
-    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+    <form method="post" onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       <input type="hidden" name="id" value={id} />
       <input type="hidden" name="holding" value={holding} />
       <b>{holdingName}</b>
@@ -57,7 +57,7 @@ export function EditPanel({ id, holding, holdingName, unit, jobTitle, managerNo 
 export function MutatePanel({ id, from, to }: { id: string; from: { id: string; name: string }[]; to: { id: string; name: string }[] }) {
   const [s, action, pending] = useForm<ActionState>(mutateUser, {});
   return (
-    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+    <form method="post" onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       <input type="hidden" name="id" value={id} />
       <p className="muted" style={{ margin: 0 }}>Keanggotaan di holding asal diakhiri hari ini dan dibuat baru di holding tujuan. Riwayat tetap tersimpan.</p>
       <Notice error={s.error} ok={s.ok} />

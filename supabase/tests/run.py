@@ -32,4 +32,7 @@ def expect(name, who, sql, want=None, err=False, role='authenticated'):
     print(('OK  ' if ok else 'FAIL'), name, '' if ok else f'(want {want!r}, got {got!r})')
     if not ok: fails+=1
 exec(open(d+'/cases.py').read())
+if os.path.exists(d+'/cases_m3.py'): exec(open(d+'/cases_m3.py').read())
+if os.path.exists(d+'/cases_m4.py'): exec(open(d+'/cases_m4.py').read())
+if os.path.exists(d+'/cases_m5.py'): exec(open(d+'/cases_m5.py').read())
 print('GAGAL:',fails); sys.exit(1 if fails else 0)

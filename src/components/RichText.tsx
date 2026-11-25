@@ -14,6 +14,7 @@ function leaf(n: Node, key: number): ReactNode {
   for (const m of n.marks ?? []) {
     if (m.type === 'bold') out = <strong>{out}</strong>;
     else if (m.type === 'italic') out = <em>{out}</em>;
+    else if (m.type === 'underline') out = <u>{out}</u>;
     else if (m.type === 'link' && safeHref(m.attrs?.href)) out = <a href={safeHref(m.attrs?.href)} rel="noopener noreferrer" target="_blank">{out}</a>;
   }
   return <span key={key} style={{ display: 'contents' }}>{out}</span>;

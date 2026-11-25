@@ -6,7 +6,7 @@ import { changePassword, type PwState } from './actions';
 export function PwForm() {
   const [state, action, pending] = useForm<PwState>(changePassword, {});
   return (
-    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form method="post" onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {state.error && <div role="alert" className="alert err">{state.error}</div>}
       <label className="field">
         <span>Kata sandi baru</span>

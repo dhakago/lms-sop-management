@@ -10,9 +10,8 @@ export default async function Kelola() {
   const ctx = await getCtx();
   if (!ctx.nav.kelola) notFound();
   const tools = [
-    { href: '/kelola/pengguna', title: 'Pengguna', text: 'Tambah, impor, reset kata sandi, mutasi, dan nonaktifkan pengguna.', show: holdingsWith(ctx, 'pengguna').length > 0 },
-    { href: '/kelola/sop', title: 'Editor SOP', text: 'Buat dan ubah board, library, playbook, card, serta target wajib baca.', show: holdingsWith(ctx, 'sop').length > 0 },
-    { href: '/kelola/akses', title: 'Akses admin', text: 'Beri atau cabut akses admin per holding dan modul.', show: isSuper(ctx) },
+    { href: holdingsWith(ctx, 'pengguna').length > 0 ? '/kelola/pengguna' : '/kelola/akses', title: 'Manajemen pengguna', text: 'Pengguna, grup, peran admin, dan ikhtisar izin. Akses board per unit, grup, atau orang diatur dari menu board.', show: holdingsWith(ctx, 'pengguna').length > 0 || isSuper(ctx) },
+    { href: '/kelola/belajar', title: 'Pembelajaran', text: 'Kursus dari card SOP, video, dan kuis. Penugasan, katalog, dan pemantauan peserta.', show: holdingsWith(ctx, 'pembelajaran').length > 0 },
     { href: '/pengaturan', title: 'Pengaturan', text: 'Istilah SOP: Board, Library, Playbook, dan Card.', show: isSuper(ctx) },
   ].filter((t) => t.show);
   return (

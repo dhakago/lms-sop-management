@@ -8,7 +8,7 @@
     "start": "next start -p ${PORT:-3000}",
     "typecheck": "tsc --noEmit",
     "bootstrap": "tsx scripts/bootstrap-superadmin.ts",
-    "reset-password": "tsx scripts/reset-password.ts",
+    "reset-password": "tsx --env-file-if-exists=.env.local scripts/reset-password.ts",
     "seed:demo": "tsx scripts/seed-demo.ts"
   },
   "engines": {

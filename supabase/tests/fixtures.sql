@@ -44,3 +44,9 @@ reset role;
 -- satu card draf di Board A
 insert into cards (playbook_id, title, created_by) select p.id, 'Draf A', '00000000-0000-0000-0000-000000000001'
  from playbooks p join libraries l on l.id=p.library_id where l.board_id='a0000000-0000-0000-0000-00000000000a';
+
+-- M3: unit pada keanggotaan dan satu penugasan baca di playbook Board C untuk seluruh holding SIB.
+update memberships set unit='Operasional' where profile_id='00000000-0000-0000-0000-000000000004';
+update memberships set unit='Finance' where profile_id='00000000-0000-0000-0000-000000000006';
+insert into playbook_requirements (playbook_id, holding_id, due_on)
+  select p.id, 'sib', '2026-12-31' from playbooks p where p.name = 'PB Lib Board C';

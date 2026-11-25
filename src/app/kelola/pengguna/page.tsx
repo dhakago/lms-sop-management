@@ -5,6 +5,7 @@ import { Crumbs } from '@/components/Crumbs';
 import { getCtx } from '@/lib/session';
 import { holdingsWith } from '@/lib/authz';
 import { createClient } from '@/lib/supabase/server';
+import { UserTabs } from '../tabs';
 import { THEMES, type HoldingId } from '@/lib/theme';
 
 export const metadata = { title: 'Pengguna' };
@@ -60,7 +61,8 @@ export default async function Pengguna({ searchParams }: { searchParams: Promise
 
   return (
     <Shell ctx={ctx} active="kelola">
-      <Crumbs items={[{ label: 'Kelola', href: '/kelola' }, { label: 'Pengguna' }]} />
+      <Crumbs items={[{ label: 'Kelola', href: '/kelola' }, { label: 'Manajemen pengguna' }]} />
+      <UserTabs ctx={ctx} active="pengguna" />
       <div className="row between">
         <h1 className="page-title">Pengguna {THEMES[h].name}</h1>
         <div className="row">
