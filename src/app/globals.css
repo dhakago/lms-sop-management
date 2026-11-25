@@ -84,6 +84,14 @@ button { font: inherit; cursor: pointer; }
 .pw-input { padding-right: 52px; }
 .pw-toggle { position: absolute; top: 0; right: 0; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: none; border: 0; border-radius: 12px; color: #5F666B; cursor: pointer; }
 .pw-toggle:hover { color: var(--p); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 1px solid #C9CED2; border-bottom: 0; border-radius: 12px 12px 0 0; background: #fff; position: sticky; top: 0; z-index: 3; }
+.tb { min-height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid #C9CED2; background: #fff; color: var(--ink); font-size: 14px; font-weight: 600; }
+.tb.on { background: var(--p); border-color: var(--p); color: #fff; }
+.tb[disabled] { opacity: 0.5; }
+.editor-wrap { border: 1px solid #C9CED2; border-radius: 0 0 12px 12px; background: #fff; padding: 14px 18px; min-height: 320px; }
+.editor-body { outline: none; min-height: 290px; max-width: none; }
+.editor-body:focus-visible { outline: none; }
+.editor-wrap:focus-within { outline: 3px solid var(--a); outline-offset: 2px; }
 .alert { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
 .alert.err { background: #FBE3E1; border: 1px solid #C9564D; color: #7A1F18; }
 .alert.info { background: var(--tp); }

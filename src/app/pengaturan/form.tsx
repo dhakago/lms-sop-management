@@ -1,12 +1,12 @@
 'use client';
-import { useActionState } from 'react';
+import { useForm } from '@/components/use-form';
 import { Notice } from '../kelola/ui';
 import { saveTerms, type TermsState } from './actions';
 
 type Terms = { board: string; library: string; playbook: string; card: string };
 
 export function TermsForm({ terms }: { terms: Terms }) {
-  const [s, action, pending] = useActionState<TermsState, FormData>(saveTerms, {});
+  const [s, action, pending] = useForm<TermsState>(saveTerms, {});
   const f = (k: keyof Terms, label: string) => (
     <label className="field">
       <span>{label}</span>
@@ -14,7 +14,7 @@ export function TermsForm({ terms }: { terms: Terms }) {
     </label>
   );
   return (
-    <form action={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <Notice error={s.error} ok={s.ok} />
       {f('board', 'Tingkat 1 (bawaan: Board)')}
       {f('library', 'Tingkat 2 (bawaan: Library)')}

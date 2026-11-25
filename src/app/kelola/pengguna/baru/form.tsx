@@ -1,12 +1,12 @@
 'use client';
 import Link from 'next/link';
-import { useActionState } from 'react';
+import { useForm } from '@/components/use-form';
 import { PasswordInput } from '@/components/password-input';
 import { Notice, SecretBox } from '../../ui';
 import { createUser, type CreateState } from '../actions';
 
 export function NewUserForm({ holdings, initial }: { holdings: { id: string; name: string }[]; initial: string }) {
-  const [state, action, pending] = useActionState<CreateState, FormData>(createUser, {});
+  const [state, action, pending] = useForm<CreateState>(createUser, {});
 
   if (state.done) {
     const d = state.done;
@@ -24,7 +24,7 @@ export function NewUserForm({ holdings, initial }: { holdings: { id: string; nam
   }
 
   return (
-    <form action={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <Notice error={state.error} />
       <label className="field"><span>Nama lengkap</span><input className="input" name="nama" required maxLength={100} /></label>
       <label className="field"><span>Nomor induk</span><input className="input" name="nomor_induk" placeholder="SIB-0142" required /></label>

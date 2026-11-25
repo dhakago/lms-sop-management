@@ -11,6 +11,7 @@ export default async function Kelola() {
   if (!ctx.nav.kelola) notFound();
   const tools = [
     { href: '/kelola/pengguna', title: 'Pengguna', text: 'Tambah, impor, reset kata sandi, mutasi, dan nonaktifkan pengguna.', show: holdingsWith(ctx, 'pengguna').length > 0 },
+    { href: '/kelola/sop', title: 'Editor SOP', text: 'Buat dan ubah board, library, playbook, card, serta target wajib baca.', show: holdingsWith(ctx, 'sop').length > 0 },
     { href: '/kelola/akses', title: 'Akses admin', text: 'Beri atau cabut akses admin per holding dan modul.', show: isSuper(ctx) },
     { href: '/pengaturan', title: 'Pengaturan', text: 'Istilah SOP: Board, Library, Playbook, dan Card.', show: isSuper(ctx) },
   ].filter((t) => t.show);

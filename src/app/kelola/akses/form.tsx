@@ -1,5 +1,5 @@
 'use client';
-import { useActionState } from 'react';
+import { useForm } from '@/components/use-form';
 import { Notice } from '../ui';
 import { saveAccess, type AccessState } from './actions';
 
@@ -9,10 +9,10 @@ export function AccessForm({ id, holdings, modules, granted }: {
   modules: { id: string; label: string }[];
   granted: string[]; // "holding|modul"
 }) {
-  const [s, action, pending] = useActionState<AccessState, FormData>(saveAccess, {});
+  const [s, action, pending] = useForm<AccessState>(saveAccess, {});
   const has = new Set(granted);
   return (
-    <form action={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <input type="hidden" name="id" value={id} />
       <Notice error={s.error} ok={s.ok} />
       <div style={{ overflowX: 'auto' }}>

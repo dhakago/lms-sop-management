@@ -35,6 +35,7 @@ export default async function SopBoards() {
           <h1 className="page-title">SOP dan prosedur</h1>
           <p className="sub">Semua prosedur kerja resmi {ctx.theme.name}, dikelompokkan dalam {terms.board.toLowerCase()}.</p>
         </div>
+        {ctx.nav.editor && <Link className="btn sec" href="/kelola/sop">Kelola SOP</Link>}
       </header>
       {boards.length === 0 ? (
         <div className="glass card empty">

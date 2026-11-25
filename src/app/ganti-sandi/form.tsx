@@ -1,12 +1,12 @@
 'use client';
-import { useActionState } from 'react';
+import { useForm } from '@/components/use-form';
 import { PasswordInput } from '@/components/password-input';
 import { changePassword, type PwState } from './actions';
 
 export function PwForm() {
-  const [state, action, pending] = useActionState<PwState, FormData>(changePassword, {});
+  const [state, action, pending] = useForm<PwState>(changePassword, {});
   return (
-    <form action={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form onSubmit={action} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {state.error && <div role="alert" className="alert err">{state.error}</div>}
       <label className="field">
         <span>Kata sandi baru</span>

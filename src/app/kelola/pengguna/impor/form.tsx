@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
+import { useState } from 'react';
+import { useForm } from '@/components/use-form';
 import { toCsv } from '@/lib/csv';
 import { Notice } from '../../ui';
 import { commitImport, previewImport, type ImportState } from './actions';
@@ -19,8 +20,8 @@ function download(name: string, text: string) {
 export function ImportForm() {
   const [csv, setCsv] = useState('');
   const [fileName, setFileName] = useState('');
-  const [prev, previewAction, previewing] = useActionState<ImportState, FormData>(previewImport, {});
-  const [done, commitAction, committing] = useActionState<ImportState, FormData>(commitImport, {});
+  const [prev, previewAction, previewing] = useForm<ImportState>(previewImport, {});
+  const [done, commitAction, committing] = useForm<ImportState>(commitImport, {});
 
   async function pick(f: File | undefined) {
     if (!f) return;
@@ -78,7 +79,7 @@ export function ImportForm() {
         </button>
       </div>
 
-      <form action={previewAction} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <form onSubmit={previewAction} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <Notice error={prev.error} />
         <label className="field">
           <span>File CSV</span>
@@ -131,7 +132,7 @@ export function ImportForm() {
             </table>
           </div>
           {p.valid > 0 && (
-            <form action={commitAction}>
+            <form onSubmit={commitAction}>
               <input type="hidden" name="csv" value={csv} />
               <button className="btn" type="submit" disabled={committing} style={{ minHeight: 52 }}>
                 {committing ? 'Menyimpan...' : `Simpan ${p.valid} pengguna`}

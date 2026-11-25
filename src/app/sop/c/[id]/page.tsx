@@ -6,6 +6,7 @@ import { Icon } from '@/components/Icon';
 import { getCtx, getTerms } from '@/lib/session';
 import { createClient } from '@/lib/supabase/server';
 import { fmtDate } from '@/lib/sop';
+import Link from 'next/link';
 import { markRead } from './actions';
 
 type CardRow = {
@@ -52,6 +53,7 @@ export default async function SopCard({ params }: { params: Promise<{ id: string
           <div className="row" style={{ marginBottom: 8 }}>
             {card.status === 'draft' && <span className="chip warn">Draf, belum terbit</span>}
             {ver && <span className="chip grey">Versi {ver.version}, diterbitkan {fmtDate(ver.published_at)}</span>}
+            {ctx.nav.editor && <Link className="btn sec" href={`/kelola/sop/c/${card.id}`} style={{ minHeight: 32 }}>Ubah di editor</Link>}
           </div>
           <h1 className="page-title">{ver?.title ?? card.title}</h1>
         </header>
