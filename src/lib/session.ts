@@ -30,6 +30,8 @@ export type Ctx = {
   holdings: HoldingId[]; // holding yang boleh dipilih
   theme: Theme;
   manager: { full_name: string } | null;
+  // Akses admin per holding dan modul. Superadmin tidak memakai daftar ini (lihat lib/authz.ts).
+  access: { holding_id: HoldingId; module: string }[];
   nav: { tim: boolean; analitik: boolean; kelola: boolean; editor: boolean; pengaturan: boolean; ganti: boolean };
   initials: string;
 };
@@ -45,11 +47,11 @@ export const getCtx = cache(async (opts: { allowPasswordChange?: boolean } = {})
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('id, employee_no, full_name, role, must_change_password, phone, email')
+    .select('id, employee_no, full_name, role, must_change_password, phone, email, active')
     .eq('id', auth.user.id)
     .maybeSingle();
-  // Akun ada di Supabase Auth tetapi profil tidak ada atau dinonaktifkan: RLS mengembalikan kosong.
-  if (!profile) {
+  // Akun ada di Supabase Auth tetapi profil tidak ada atau dinonaktifkan.
+  if (!profile || !profile.active) {
     await supabase.auth.signOut();
     redirect('/login?e=nonaktif');
   }
@@ -66,10 +68,12 @@ export const getCtx = cache(async (opts: { allowPasswordChange?: boolean } = {})
   // Peserta memilih di antara holding keanggotaannya. Admin juga bisa memilih holding yang diberi aksesnya.
   const all: HoldingId[] = ['people', 'sib', 'bejo', 'bos'];
   let holdings = memberships.map((m) => m.holding_id);
+  let access: Ctx['access'] = [];
   if (profile.role === 'superadmin') holdings = all;
   else if (profile.role === 'admin') {
-    const { data: acc } = await supabase.from('admin_access').select('holding_id').eq('profile_id', profile.id);
-    holdings = all.filter((h) => holdings.includes(h) || (acc ?? []).some((a) => a.holding_id === h));
+    const { data: acc } = await supabase.from('admin_access').select('holding_id, module').eq('profile_id', profile.id);
+    access = (acc ?? []) as Ctx['access'];
+    holdings = all.filter((h) => holdings.includes(h) || access.some((a) => a.holding_id === h));
   }
   if (holdings.length === 0) holdings = ['people'];
 
@@ -92,6 +96,7 @@ export const getCtx = cache(async (opts: { allowPasswordChange?: boolean } = {})
     .is('ended_on', null);
 
   const admin = profile.role === 'admin' || profile.role === 'superadmin';
+  const superadmin = profile.role === 'superadmin';
   return {
     userId: profile.id,
     profile: profile as Ctx['profile'],
@@ -100,12 +105,14 @@ export const getCtx = cache(async (opts: { allowPasswordChange?: boolean } = {})
     holdings,
     theme: themeFor(holding),
     manager,
+    access,
     nav: {
       tim: admin || (count ?? 0) > 0,
       analitik: admin,
-      kelola: admin,
-      editor: admin,
-      pengaturan: admin,
+      // Menu Kelola hanya untuk admin yang benar-benar diberi akses (atau superadmin).
+      kelola: superadmin || access.length > 0,
+      editor: superadmin || access.some((a) => a.module === 'sop'),
+      pengaturan: superadmin,
       ganti: holdings.length > 1,
     },
     initials: initials(profile.full_name),

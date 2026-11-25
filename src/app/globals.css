@@ -80,6 +80,10 @@ button { font: inherit; cursor: pointer; }
 .field > span { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
 .input { width: 100%; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px solid #C9CED2; background: #fff; font: 400 16px Inter, sans-serif; color: var(--ink); }
 .input[aria-invalid='true'] { border: 2px solid #C9564D; }
+.pw-wrap { position: relative; }
+.pw-input { padding-right: 52px; }
+.pw-toggle { position: absolute; top: 0; right: 0; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: none; border: 0; border-radius: 12px; color: #5F666B; cursor: pointer; }
+.pw-toggle:hover { color: var(--p); }
 .alert { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
 .alert.err { background: #FBE3E1; border: 1px solid #C9564D; color: #7A1F18; }
 .alert.info { background: var(--tp); }

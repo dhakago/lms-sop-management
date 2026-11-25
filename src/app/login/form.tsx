@@ -1,5 +1,6 @@
 'use client';
 import { useActionState } from 'react';
+import { PasswordInput } from '@/components/password-input';
 import { login, type LoginState } from './actions';
 
 export function LoginForm({ notice }: { notice?: string }) {
@@ -25,7 +26,7 @@ export function LoginForm({ notice }: { notice?: string }) {
       </label>
       <label className="field">
         <span>Kata sandi</span>
-        <input className="input" name="sandi" type="password" autoComplete="current-password" aria-invalid={state.error ? 'true' : undefined} required />
+        <PasswordInput name="sandi" autoComplete="current-password" aria-invalid={state.error ? 'true' : undefined} required />
       </label>
       <button className="btn" type="submit" disabled={pending} style={{ minHeight: 52, fontSize: 16, borderRadius: 12 }}>
         {pending ? 'Memeriksa...' : 'Masuk'}

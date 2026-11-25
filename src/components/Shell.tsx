@@ -16,11 +16,13 @@ export async function Shell({ ctx, active, children }: { ctx: Ctx; active: strin
     { key: 'belajar', label: 'Pembelajaran', href: '/belajar', icon: 'cap', show: true },
     { key: 'tim', label: 'Tim', href: '/tim', icon: 'people', show: ctx.nav.tim },
     { key: 'analitik', label: 'Analitik', href: '/analitik', icon: 'bars', show: ctx.nav.analitik },
+    { key: 'kelola', label: 'Kelola', href: '/kelola', icon: 'tools', show: ctx.nav.kelola },
   ];
   const mobile: NavItem[] = [
     { key: 'beranda', label: 'Beranda', href: '/', icon: 'home', show: true },
     { key: 'sop', label: 'SOP', href: '/sop', icon: 'sop', show: true },
     { key: 'belajar', label: 'Belajar', href: '/belajar', icon: 'cap', show: true },
+    { key: 'kelola', label: 'Kelola', href: '/kelola', icon: 'tools', show: ctx.nav.kelola },
     { key: 'akun', label: 'Akun', href: '/profil', icon: 'user', show: true },
   ];
 
@@ -84,7 +86,7 @@ export async function Shell({ ctx, active, children }: { ctx: Ctx; active: strin
         {children}
       </main>
       <nav className="bnav" aria-label="Menu utama">
-        {mobile.map((i) => (
+        {mobile.filter((i) => i.show).map((i) => (
           <Link key={i.key} href={i.href} aria-current={(active === i.key || (i.key === 'akun' && active === 'profil')) ? 'page' : undefined}>
             <Icon name={i.icon} size={24} />
             {i.label}

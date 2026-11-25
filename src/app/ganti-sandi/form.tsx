@@ -1,5 +1,6 @@
 'use client';
 import { useActionState } from 'react';
+import { PasswordInput } from '@/components/password-input';
 import { changePassword, type PwState } from './actions';
 
 export function PwForm() {
@@ -9,11 +10,11 @@ export function PwForm() {
       {state.error && <div role="alert" className="alert err">{state.error}</div>}
       <label className="field">
         <span>Kata sandi baru</span>
-        <input className="input" name="baru" type="password" autoComplete="new-password" minLength={8} required />
+        <PasswordInput name="baru" autoComplete="new-password" minLength={8} required />
       </label>
       <label className="field">
         <span>Ulangi kata sandi baru</span>
-        <input className="input" name="ulang" type="password" autoComplete="new-password" minLength={8} required />
+        <PasswordInput name="ulang" autoComplete="new-password" minLength={8} required />
       </label>
       <p className="muted" style={{ margin: 0 }}>Minimal 8 karakter, memuat huruf dan angka.</p>
       <button className="btn" type="submit" disabled={pending} style={{ minHeight: 52, fontSize: 16, borderRadius: 12 }}>

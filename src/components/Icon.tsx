@@ -14,7 +14,8 @@ const P: Record<string, string> = {
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   file: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
-  lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  tools: '<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
+  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
 };
 
 export function Icon({ name, size = 22, sw = 1.8 }: { name: keyof typeof P | string; size?: number; sw?: number }) {
